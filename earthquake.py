@@ -8,22 +8,8 @@ import requests
 
 
 def fetch_earthquake(num):
-    maxtime = int(time.time() * 1000)
-    mintime = maxtime - 86400000 * 60
     resp = requests.get(
-        'http://comcat.cr.usgs.gov/earthquakes/feed/search.php',
-        params={
-            'maxEventLatitude': 90.0,
-            'minEventLatitude': -90.0,
-            'minEventLongitude': -180.0,
-            'maxEventLongitude': 180.0,
-            'minEventTime': mintime,
-            'maxEventTime': maxtime,
-            'minEventMagnitude': 4.5,
-            'maxEventMagnitude': 10,
-            'minEventDepth': 0.0,
-            'maxEventDepth': 100.0,
-            'format': 'geojson'})
+        'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson')
     data = resp.json()
     rand = random.sample(data['features'], num * 4)
     result = []
@@ -112,5 +98,5 @@ def weibo():
 
 if __name__ == '__main__':
     weibo()
-    #for r in fetch_earthquake():
-    #    print r['lat'], r['lon'], r['place']
+    # for r in fetch_earthquake(10):
+    #     print r['lat'], r['lon'], r['place'], r['is_china']
